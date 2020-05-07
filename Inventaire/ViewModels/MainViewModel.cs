@@ -57,7 +57,7 @@ namespace BillingManagement.UI.ViewModels
 			invoiceViewModel = new InvoiceViewModel(customerViewModel.Customers);
 
 			VM = customerViewModel;
-
+			//premier commit
 		}
 
 		private void ChangeView(string vm)
