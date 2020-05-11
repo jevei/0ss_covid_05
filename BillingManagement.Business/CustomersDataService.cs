@@ -9,7 +9,7 @@ namespace BillingManagement.Business
     public class CustomersDataService : IDataService<Customer>
     {
         readonly List<Customer> customers;
-
+        readonly List<Customer> OrderByLastName;
         public CustomersDataService()
         {
             customers = new List<Customer>()
@@ -116,7 +116,7 @@ namespace BillingManagement.Business
                 new Customer() {Name="Randall", LastName="Griffith",Address="Ap #295-2152 Cras Street", City="Price",Province="QC", PostalCode="J3T 8R1", PicturePath="/images/user.png", ContactInfo="Home : 108-300-4964"},
 
             };
-
+            
             List<ContactInfo> contactInfos = new ContactInfosDataService().GetAll().ToList();
 
             Random rnd = new Random();
@@ -133,6 +133,14 @@ namespace BillingManagement.Business
                     var ci = contactInfos[index];
                     c.ContactInfos.Add(ci);
                 }
+            }
+            var orderByLastName = from c in customers
+                                  orderby c.LastName //Sorts the studentList collection in ascending order
+                                  select c;
+            OrderByLastName = new List<Customer>();
+            foreach (Customer c in orderByLastName)
+            {
+                OrderByLastName.Add(c);
             }
         }
 
@@ -151,7 +159,7 @@ namespace BillingManagement.Business
         }
         public IEnumerable<Customer> GetAll()
         {
-            foreach (Customer c in customers)
+            foreach (Customer c in OrderByLastName)
             {
                 yield return c;
             }
