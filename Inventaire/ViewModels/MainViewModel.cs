@@ -1,8 +1,10 @@
-﻿using BillingManagement.Models;
+﻿using BillingManagement.Business;
+using BillingManagement.Models;
 using BillingManagement.UI.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace BillingManagement.UI.ViewModels
 {
@@ -42,14 +44,14 @@ namespace BillingManagement.UI.ViewModels
 		public DelegateCommand<Customer> DisplayCustomerCommand { get; private set; }
 
 		public DelegateCommand<Customer> AddInvoiceToCustomerCommand { get; private set; }
-
+		public DelegateCommand<object> SearchCustomerCommand { get; set; }
 
 		public MainViewModel()
 		{
 			ChangeViewCommand = new ChangeViewCommand(ChangeView);
 			DisplayInvoiceCommand = new DelegateCommand<Invoice>(DisplayInvoice);
 			DisplayCustomerCommand = new DelegateCommand<Customer>(DisplayCustomer);
-
+			SearchCustomerCommand = new DelegateCommand<object>(SearchCustomer, SearchCustomerCanExecute);
 			AddNewItemCommand = new DelegateCommand<object>(AddNewItem, CanAddNewItem);
 			AddInvoiceToCustomerCommand = new DelegateCommand<Customer>(AddInvoiceToCustomer);
 
@@ -109,6 +111,36 @@ namespace BillingManagement.UI.ViewModels
 			result = VM == customerViewModel;
 			return result;
 		}
+		private void SearchCustomer(object parameter)
+		{
+			string input = parameter as string;
+			int output;
+			string searchMethod;
+			if (!Int32.TryParse(input, out output))
+			{
+				searchMethod = "name";
+			}
+			else
+			{
+				searchMethod = "id";
+			}
 
+			switch (searchMethod)
+			{
+				case "name":
+					customerViewModel.SelectedCustomer = CustomersDataService.GetCustomerByName(input);
+					break;
+				default:
+					MessageBox.Show("Unkonwn search method");
+					break;
+			}
+		}
+		private bool SearchCustomerCanExecute(object o)
+		{
+			bool result = false;
+
+			result = VM == customerViewModel;
+			return result;
+		}
 	}
 }

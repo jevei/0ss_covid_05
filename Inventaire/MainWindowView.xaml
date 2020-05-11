@@ -51,8 +51,8 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Rechercher : " VerticalAlignment="Center"/>
-                <TextBox Text="{Binding SearchCriteria}" Width="150" Height="30" VerticalContentAlignment="Center"/>
-                <Button Content="Recherche" Command="{Binding SearchCommand}"/>
+                <TextBox x:Name="Criteria" Text="{Binding SearchCriteria}" Width="150" Height="30" VerticalContentAlignment="Center"/>
+                <Button Content="Recherche" Command="{Binding SearchCustomerCommand}" CommandParameter="{Binding ElementName=Criteria, Path=Text}"/>
             </StackPanel>
 
         </ToolBar>

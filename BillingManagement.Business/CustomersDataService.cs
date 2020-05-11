@@ -136,6 +136,19 @@ namespace BillingManagement.Business
             }
         }
 
+        public static Customer GetCustomerByName(string input)
+        {
+            Customer cm = null;
+            CustomersDataService cds = new CustomersDataService();
+            foreach (Customer cu in cds.customers)
+            {
+                if (cu.Name == input || cu.LastName == input)
+                {
+                    cm = cu;
+                }
+            }
+            return cm;
+        }
         public IEnumerable<Customer> GetAll()
         {
             foreach (Customer c in customers)
