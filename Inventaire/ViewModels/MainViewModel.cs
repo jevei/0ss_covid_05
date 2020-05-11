@@ -44,14 +44,14 @@ namespace BillingManagement.UI.ViewModels
 		public DelegateCommand<Customer> DisplayCustomerCommand { get; private set; }
 
 		public DelegateCommand<Customer> AddInvoiceToCustomerCommand { get; private set; }
-		public DelegateCommand<object> SearchCustomerCommand { get; set; }
+		public RelayCommand<object> SearchCustomerCommand { get; set; }
 
 		public MainViewModel()
 		{
 			ChangeViewCommand = new ChangeViewCommand(ChangeView);
 			DisplayInvoiceCommand = new DelegateCommand<Invoice>(DisplayInvoice);
 			DisplayCustomerCommand = new DelegateCommand<Customer>(DisplayCustomer);
-			SearchCustomerCommand = new DelegateCommand<object>(SearchCustomer, SearchCustomerCanExecute);
+			SearchCustomerCommand = new RelayCommand<object>(SearchCustomer, SearchCustomerCanExecute);
 			AddNewItemCommand = new DelegateCommand<object>(AddNewItem, CanAddNewItem);
 			AddInvoiceToCustomerCommand = new DelegateCommand<Customer>(AddInvoiceToCustomer);
 
