@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
 namespace BillingManagement.Models
 {
     public class Customer : INotifyPropertyChanged
     {
+        public string CustomerId { get; set; }
         private string name;
         private string lastName;
         private string address;

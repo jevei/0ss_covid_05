@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200511172430_InitialCreation.cs" />
+    <Compile Remove="Migrations\20200511172430_InitialCreation.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="images\exit.png" />
     <None Remove="images\new_user.png" />
     <None Remove="images\user.png" />
@@ -46,6 +51,12 @@
     <Resource Include="images\user.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BillingManagement.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
