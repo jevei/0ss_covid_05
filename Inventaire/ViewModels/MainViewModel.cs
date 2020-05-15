@@ -4,6 +4,7 @@ using BillingManagement.UI.ViewModels.Commands;
 using Inventaire;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,8 @@ namespace BillingManagement.UI.ViewModels
 
 		CustomerViewModel customerViewModel;
 		InvoiceViewModel invoiceViewModel;
+		private IEnumerable<Customer> _customers;
+		private IEnumerable<Invoice> _invoices;
 
 		public ChangeViewCommand ChangeViewCommand { get; set; }
 
@@ -63,9 +66,12 @@ namespace BillingManagement.UI.ViewModels
 
 
 			SeedData();
-			db.Customers.OrderByDescending(xx => xx.LastName);
-			customerViewModel = new CustomerViewModel(db.Customers);
-			invoiceViewModel = new InvoiceViewModel(db.Invoices);
+			_customers = new ObservableCollection<Customer>();
+			_invoices = new ObservableCollection<Invoice>();
+			_customers = db.Customers.OrderBy(xx => xx.LastName).ToList();
+			_invoices = db.Invoices.ToList();
+			customerViewModel = new CustomerViewModel(_customers);
+			invoiceViewModel = new InvoiceViewModel(_invoices);
 			VM = customerViewModel;
 			//premier commit
 		}
