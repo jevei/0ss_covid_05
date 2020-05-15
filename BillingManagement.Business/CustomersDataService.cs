@@ -9,7 +9,6 @@ namespace BillingManagement.Business
     public class CustomersDataService : IDataService<Customer>
     {
         readonly List<Customer> customers;
-        readonly List<Customer> OrderByLastName;
         public CustomersDataService()
         {
             customers = new List<Customer>()
@@ -134,14 +133,6 @@ namespace BillingManagement.Business
                     c.ContactInfos.Add(ci);
                 }
             }
-            var orderByLastName = from c in customers
-                                  orderby c.LastName //Sorts the studentList collection in ascending order
-                                  select c;
-            OrderByLastName = new List<Customer>();
-            foreach (Customer c in orderByLastName)
-            {
-                OrderByLastName.Add(c);
-            }
         }
 
         public static Customer GetCustomerByName(string input)
@@ -159,7 +150,7 @@ namespace BillingManagement.Business
         }
         public IEnumerable<Customer> GetAll()
         {
-            foreach (Customer c in OrderByLastName)
+            foreach (Customer c in customers)
             {
                 yield return c;
             }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BillingManagement.UI.Migrations
 {
     [DbContext(typeof(BillingManagementContext))]
-    [Migration("20200511172755_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20200515181113_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,8 +20,9 @@ namespace BillingManagement.UI.Migrations
 
             modelBuilder.Entity("BillingManagement.Models.ContactInfo", b =>
                 {
-                    b.Property<string>("ContactInfoId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ContactInfoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Contact")
                         .HasColumnType("TEXT");
@@ -29,8 +30,8 @@ namespace BillingManagement.UI.Migrations
                     b.Property<string>("ContactType")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ContactInfoId");
 
@@ -41,8 +42,9 @@ namespace BillingManagement.UI.Migrations
 
             modelBuilder.Entity("BillingManagement.Models.Customer", b =>
                 {
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
                         .HasColumnType("TEXT");
@@ -82,8 +84,8 @@ namespace BillingManagement.UI.Migrations
                     b.Property<DateTime>("CreationDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("SubTotal")
                         .HasColumnType("REAL");

@@ -13,10 +13,9 @@ namespace BillingManagement.UI.ViewModels
 		private Invoice selectedInvoice;
 		private ObservableCollection<Invoice> invoices;
 
-		public InvoiceViewModel(IEnumerable<Customer> customerData)
+		public InvoiceViewModel(IEnumerable<Invoice> invoiceData)
 		{
-			InvoicesDataService ids = new InvoicesDataService(customerData);
-			Invoices = new ObservableCollection<Invoice>(ids.GetAll().ToList());
+			Invoices = new ObservableCollection<Invoice>(invoiceData.ToList());
 		}
 
 		public Invoice SelectedInvoice

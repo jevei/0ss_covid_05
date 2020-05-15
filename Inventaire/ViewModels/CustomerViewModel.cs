@@ -1,15 +1,16 @@
 ﻿using BillingManagement.Business;
 using BillingManagement.Models;
 using BillingManagement.UI.ViewModels.Commands;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace BillingManagement.UI.ViewModels
 {
     public class CustomerViewModel : BaseViewModel
     {
         readonly CustomersDataService customersDataService = new CustomersDataService();
-
         private ObservableCollection<Customer> customers;
         private Customer selectedCustomer;
 
@@ -36,18 +37,10 @@ namespace BillingManagement.UI.ViewModels
         public RelayCommand<Customer> DeleteCustomerCommand { get; private set; }
 
 
-        public CustomerViewModel()
+        public CustomerViewModel(IEnumerable<Customer> customerData)
         {
             DeleteCustomerCommand = new RelayCommand<Customer>(DeleteCustomer, CanDeleteCustomer);
-            
-
-            InitValues();
-        }
-
-        private void InitValues()
-        {
-            Customers = new ObservableCollection<Customer>(customersDataService.GetAll());
-            Debug.WriteLine(Customers.Count);
+            Customers = new ObservableCollection<Customer>(customerData.ToList());
         }
 
         private void DeleteCustomer(Customer c)

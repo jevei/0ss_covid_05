@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BillingManagement.UI.Migrations
 {
-    public partial class InitialCreation : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,8 @@ namespace BillingManagement.UI.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<string>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
@@ -30,10 +31,11 @@ namespace BillingManagement.UI.Migrations
                 name: "ContactInfos",
                 columns: table => new
                 {
-                    ContactInfoId = table.Column<string>(nullable: false),
+                    ContactInfoId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     ContactType = table.Column<string>(nullable: true),
                     Contact = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<string>(nullable: true)
+                    CustomerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +55,7 @@ namespace BillingManagement.UI.Migrations
                     InvoiceId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CreationDateTime = table.Column<DateTime>(nullable: false),
-                    CustomerId = table.Column<string>(nullable: true),
+                    CustomerId = table.Column<int>(nullable: true),
                     SubTotal = table.Column<double>(nullable: false)
                 },
                 constraints: table =>

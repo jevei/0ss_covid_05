@@ -1,8 +1,11 @@
 ﻿using BillingManagement.Business;
 using BillingManagement.Models;
 using BillingManagement.UI.ViewModels.Commands;
+using Inventaire;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -10,6 +13,7 @@ namespace BillingManagement.UI.ViewModels
 {
     class MainViewModel : BaseViewModel
     {
+		BillingManagementContext db = new BillingManagementContext();
 		private BaseViewModel _vm;
 
 		public BaseViewModel VM
@@ -45,6 +49,7 @@ namespace BillingManagement.UI.ViewModels
 
 		public DelegateCommand<Customer> AddInvoiceToCustomerCommand { get; private set; }
 		public RelayCommand<object> SearchCustomerCommand { get; set; }
+		public DelegateCommand<object> ExitClickCommand { get; private set; }
 
 		public MainViewModel()
 		{
@@ -54,10 +59,13 @@ namespace BillingManagement.UI.ViewModels
 			SearchCustomerCommand = new RelayCommand<object>(SearchCustomer, SearchCustomerCanExecute);
 			AddNewItemCommand = new DelegateCommand<object>(AddNewItem, CanAddNewItem);
 			AddInvoiceToCustomerCommand = new DelegateCommand<Customer>(AddInvoiceToCustomer);
+			ExitClickCommand = new DelegateCommand<object>(ExitClick);
 
-			customerViewModel = new CustomerViewModel();
-			invoiceViewModel = new InvoiceViewModel(customerViewModel.Customers);
 
+			SeedData();
+			customerViewModel = new CustomerViewModel(db.Customers);
+			invoiceViewModel = new InvoiceViewModel(db.Invoices);
+			//db = null;
 			VM = customerViewModel;
 			//premier commit
 		}
@@ -128,7 +136,7 @@ namespace BillingManagement.UI.ViewModels
 			switch (searchMethod)
 			{
 				case "name":
-					customerViewModel.SelectedCustomer = CustomersDataService.GetCustomerByName(input);
+					customerViewModel.SelectedCustomer = db.Customers.Where(xx => xx.LastName == input).FirstOrDefault();
 					break;
 				default:
 					MessageBox.Show("Unkonwn search method");
@@ -141,6 +149,26 @@ namespace BillingManagement.UI.ViewModels
 
 			result = VM == customerViewModel;
 			return result;
+		}
+		void SeedData()
+		{
+			if (db.Customers.Count() == 0)
+			{
+				List<Customer> Customers = new CustomersDataService().GetAll().ToList();
+				List<Invoice> Invoices = new InvoicesDataService(Customers).GetAll().ToList();
+
+				foreach (Customer c in Customers)
+				{
+					db.Customers.Add(c);
+				}
+				db.SaveChanges();
+			}
+			db.Customers.OrderBy(x => x.LastName);
+			Debug.WriteLine($"Customers : {db.Customers.Count()}");
+		}
+		private void ExitClick(object item)
+		{
+			App.Current.Shutdown();
 		}
 	}
 }
