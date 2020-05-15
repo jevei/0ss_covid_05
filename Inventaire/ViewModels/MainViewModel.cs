@@ -63,9 +63,9 @@ namespace BillingManagement.UI.ViewModels
 
 
 			SeedData();
+			db.Customers.OrderByDescending(xx => xx.LastName);
 			customerViewModel = new CustomerViewModel(db.Customers);
 			invoiceViewModel = new InvoiceViewModel(db.Invoices);
-			//db = null;
 			VM = customerViewModel;
 			//premier commit
 		}
@@ -136,7 +136,7 @@ namespace BillingManagement.UI.ViewModels
 			switch (searchMethod)
 			{
 				case "name":
-					customerViewModel.SelectedCustomer = db.Customers.Where(xx => xx.LastName == input).FirstOrDefault();
+					customerViewModel.SelectedCustomer = db.Customers.Where(xx => xx.LastName == input || xx.Name == input).FirstOrDefault();
 					break;
 				default:
 					MessageBox.Show("Unkonwn search method");
@@ -163,7 +163,6 @@ namespace BillingManagement.UI.ViewModels
 				}
 				db.SaveChanges();
 			}
-			db.Customers.OrderBy(x => x.LastName);
 			Debug.WriteLine($"Customers : {db.Customers.Count()}");
 		}
 		private void ExitClick(object item)
