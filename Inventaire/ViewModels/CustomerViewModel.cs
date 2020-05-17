@@ -11,6 +11,7 @@ namespace BillingManagement.UI.ViewModels
     public class CustomerViewModel : BaseViewModel
     {
         readonly CustomersDataService customersDataService = new CustomersDataService();
+        readonly BillingManagementContext db = new BillingManagementContext();
         private ObservableCollection<Customer> customers;
         private Customer selectedCustomer;
 
@@ -52,6 +53,8 @@ namespace BillingManagement.UI.ViewModels
             SelectedCustomer = Customers[currentIndex];
 
             Customers.Remove(c);
+            db.Customers.Remove(c);
+            db.SaveChanges();
         }
 
         private bool CanDeleteCustomer(Customer c)

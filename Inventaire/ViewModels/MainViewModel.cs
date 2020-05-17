@@ -106,6 +106,8 @@ namespace BillingManagement.UI.ViewModels
 			var invoice = new Invoice(c);
 			c.Invoices.Add(invoice);
 			DisplayInvoice(invoice);
+			db.Invoices.Add(invoice);
+			db.SaveChanges();
 		}
 
 		private void AddNewItem (object item)
@@ -115,6 +117,8 @@ namespace BillingManagement.UI.ViewModels
 				var c = new Customer();
 				customerViewModel.Customers.Add(c);
 				customerViewModel.SelectedCustomer = c;
+				db.Customers.Add(c);
+				db.SaveChanges();
 			}
 		}
 
