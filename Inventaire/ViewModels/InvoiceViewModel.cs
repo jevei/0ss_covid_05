@@ -1,10 +1,7 @@
-﻿using BillingManagement.Business;
-using BillingManagement.Models;
-using System;
+﻿using BillingManagement.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 
 namespace BillingManagement.UI.ViewModels
 {

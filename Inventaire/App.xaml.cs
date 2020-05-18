@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using BillingManagement.UI;
+using BillingManagement.UI.ViewModels;
+using System.Windows;
 
 namespace Inventaire
 {
@@ -9,12 +11,18 @@ namespace Inventaire
     {
         MainWindowView _window;
 
-        public App() 
-        { 
-        
+        public App()
+        {
+
             _window = new MainWindowView();
 
             _window.Show();
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            BillingManagementContext db = MainViewModel.GetDb();
+            db.SaveChanges();
+            base.OnExit(e);
         }
     }
 }

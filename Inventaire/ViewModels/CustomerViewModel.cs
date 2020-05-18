@@ -3,7 +3,6 @@ using BillingManagement.Models;
 using BillingManagement.UI.ViewModels.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 
 namespace BillingManagement.UI.ViewModels

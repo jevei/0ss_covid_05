@@ -14,7 +14,7 @@ namespace BillingManagement.UI.ViewModels
 {
     class MainViewModel : BaseViewModel
     {
-		BillingManagementContext db = new BillingManagementContext();
+		static BillingManagementContext db = new BillingManagementContext();
 		private BaseViewModel _vm;
 
 		public BaseViewModel VM
@@ -24,6 +24,11 @@ namespace BillingManagement.UI.ViewModels
 				_vm = value;
 				OnPropertyChanged();
 			}
+		}
+
+		internal static BillingManagementContext GetDb()
+		{
+			return db;
 		}
 
 		private string searchCriteria;
@@ -78,6 +83,7 @@ namespace BillingManagement.UI.ViewModels
 
 		private void ChangeView(string vm)
 		{
+			db.SaveChanges();
 			switch (vm)
 			{
 				case "customers":
@@ -91,12 +97,14 @@ namespace BillingManagement.UI.ViewModels
 
 		private void DisplayInvoice(Invoice invoice)
 		{
+			db.SaveChanges();
 			invoiceViewModel.SelectedInvoice = invoice;
 			VM = invoiceViewModel;
 		}
 
 		private void DisplayCustomer(Customer customer)
 		{
+			db.SaveChanges();
 			customerViewModel.SelectedCustomer = customer;
 			VM = customerViewModel;
 		}
@@ -177,6 +185,7 @@ namespace BillingManagement.UI.ViewModels
 		}
 		private void ExitClick(object item)
 		{
+			db.SaveChanges();
 			App.Current.Shutdown();
 		}
 	}

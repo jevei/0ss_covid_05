@@ -17,7 +17,5 @@ namespace Inventaire
 
             DataContext = new MainViewModel();
         }
-
-
     }
 }
